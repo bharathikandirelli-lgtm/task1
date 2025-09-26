@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Learn - Online Course Runner Demo</title>
+    
+    <style>
+        /* --- General Reset & Base Styles --- */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* --- Header & Navigation --- */
+        .header {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: #4CAF50; /* Green brand color */
+            margin: 0;
+        }
+
+        .header nav a {
+            text-decoration: none;
+            color: #333;
+            margin-left: 20px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .header nav a:hover {
+            background-color: #eee;
+        }
+
+        /* --- Course Runner Layout --- */
+        .course-runner-layout {
+            display: flex;
+            max-width: 1400px; 
+            margin: 0 auto;
+            gap: 20px;
+            min-height: 85vh;
+            padding: 20px;
+        }
+
+        .course-header {
+            background-color: #2196F3;
+            color: white;
+            padding: 15px 40px;
+            border-bottom: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .course-header h2 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        /* --- Main Video Area --- */
+        .video-player-area {
+            flex: 3; /* Takes up 3/4 of space */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .video-placeholder {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #000;
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .lesson-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .lesson-description h4 {
+            color: #2196F3;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+
+        .lesson-description ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .lesson-description a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        /* --- Sidebar Curriculum --- */
+        .curriculum-sidebar {
+            flex: 1; /* Sidebar takes 1/4 of space */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .curriculum-sidebar h3 {
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .module {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .module-title {
+            font-weight: bold;
+            padding: 10px 0;
+            cursor: pointer;
+            display: block;
+            color: #4CAF50;
+        }
+
+        .module ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 10px 0;
+        }
+
+        .lesson {
+            padding: 8px 10px;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .lesson:hover {
+            background-color: #f9f9f9;
+        }
+
+        .lesson.active {
+            background-color: #e3f2fd;
+            font-weight: bold;
+            color: #1976D2;
+            border-left: 3px solid #1976D2;
+        }
+
+        /* --- Buttons --- */
+        .button {
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .primary-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .primary-button:hover {
+            background-color: #45a049;
+        }
+
+        .disabled {
+            background-color: #ccc;
+            color: #888;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #777;
+            background-color: #fff;
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 900px) {
+            .course-runner-layout {
+                flex-direction: column;
+            }
+            .curriculum-sidebar {
+                order: -1; /* Sidebar above the video on small screens */
+            }
+            .course-header {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+            .course-header h2 {
+                text-align: center;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header course-header">
+        <a href="#" class="button secondary-button" onclick="alert('Demo: Redirecting to Course Catalog')">← Back to Courses</a>
+        <h2>Front-End Fundamentals: HTML & CSS</h2>
+        <a href="#" class="button secondary-button" onclick="alert('Demo: Profile/Dashboard page')">Profile</a>
+    </header>
+
+    <div class="course-runner-layout">
+        
+        <main class="video-player-area">
+            <h3 id="lesson-title">Lesson 1.1: The Structure of an HTML Page</h3>
+            
+            <div class="video-placeholder">
+                <p><iframe width="560" height="315" src="https://www.youtube.com/embed/qz0aGYrrlhU?si=h-Lq9SsFVipETT4N" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>
+                <p id="video-info">Running: Module 1 / Lesson 1</p>
+            </div>
+
+            <div class="lesson-navigation">
+                <button id="prev-btn" class="button disabled" onclick="alert('Demo: Previous Lesson')">← Previous Lesson</button>
+                <button id="next-btn" class="button primary-button" onclick="alert('Demo: Marking Lesson Complete and Moving to Next')">Mark Complete & Next Lesson →</button>
+            </div>
+
+            <section class="lesson-description">
+                <h4>Lesson Resources and Notes</h4>
+                <p id="lesson-text">In this lesson, you will learn about the basic tags: `<!DOCTYPE html>`, `<html>`, `<head>`, and `<body>`. The demo only shows the first lesson.</p>
+                <ul>
+                    <li>**Download:** <a href="#" onclick="alert('Demo: Downloading Starter Code')">Starter Code Zip</a></li>
+                    <li>**Quiz:** <a href="#" onclick="alert('Demo: Starting Quiz')">Take Lesson 1 Quiz</a></li>
+                </ul>
+            </section>
+        </main>
+
+        <aside class="curriculum-sidebar">
+            <h3>Course Curriculum</h3>
+            
+            <details open class="module">
+                <summary class="module-title">Module 1: HTML Fundamentals</summary>
+                <ul>
+                    <li class="lesson active" data-lesson="1-1">1.1 The Structure of an HTML Page (Current)</li>
+                    <li class="lesson" data-lesson="1-2">1.2 Text Formatting and Semantics</li>
+                    <li class="lesson" data-lesson="1-3">1.3 Working with Lists and Links</li>
+                </ul>
+            </details>
+
+            <details class="module">
+                <summary class="module-title">Module 2: CSS Introduction</summary>
+                <ul>
+                    <li class="lesson" data-lesson="2-1">2
